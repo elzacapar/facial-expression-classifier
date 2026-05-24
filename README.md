@@ -13,6 +13,27 @@ The model classifies grayscale 48x48 face images into one of 7 emotions:
 
 **Final model performance:** 52.8% test accuracy (random baseline: 14.3%)
 
+## Demo
+
+![App screenshot](screenshot.png)
+
+The app supports both image upload and live webcam input.
+Note that webcam predictions may be less reliable than uploaded images,
+as the model was trained on curated 48x48 grayscale photos rather than 
+real-world webcam conditions.
+
+## Run the App
+
+```bash
+source venv/Scripts/activate  # Windows
+python app.py
+```
+
+Opens at `http://127.0.0.1:7860`.
+
+- **Upload mode:** upload any photo of a face to get an emotion prediction
+- **Webcam mode:** switch to webcam for live predictions directly in the browser
+
 ## Project Structure
 
 facial-expression-classifier/
