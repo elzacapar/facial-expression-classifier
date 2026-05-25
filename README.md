@@ -15,16 +15,27 @@ The model classifies grayscale 48x48 face images into one of 7 emotions:
 
 ## Demo
 
-### Happy & Surprised — correctly predicted with high confidence
-![Happy prediction](screenshot.png)
-![Surprise prediction](screenshot3.png)
+### My predictions — high confidence
+The model predicted my expressions correctly and with high confidence.
 
-### Testing on different people
-The model handles different faces with varying confidence. 
-Facial features like beards, lighting, and angle affect results.
+![Happy prediction](screenshot.png)
+*Happy — predicted correctly at 78%*
+
+![Surprise prediction](screenshot3.png)
+*Surprise — predicted correctly at 56%*
+
+### Testing on a different person
+Testing on my husband showed noticeably lower confidence scores,
+likely due to his beard, darker complexion, and different facial structure.
+This reflects a known limitation of the FER-2013 dataset — it may not 
+represent all demographics equally.
 
 ![Husband happy](screenshot2.png)
+*Happy — predicted correctly but at lower confidence (60%)*
+
 ![Husband surprised](screenshot4.png)
+*Surprise — misclassified as sad (22%) — the model was uncertain, 
+with probabilities spread across sad (22%), fear (21%), angry (17%) and neutral (16%)*
 
 The app includes:
 - Face detection using OpenCV — automatically crops the face before prediction
