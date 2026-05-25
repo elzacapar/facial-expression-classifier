@@ -15,12 +15,23 @@ The model classifies grayscale 48x48 face images into one of 7 emotions:
 
 ## Demo
 
-![App screenshot](screenshot.png)
+### Happy & Surprised — correctly predicted with high confidence
+![Happy prediction](screenshot.png)
+![Surprise prediction](screenshot3.png)
 
-The app supports both image upload and live webcam input.
-Note that webcam predictions may be less reliable than uploaded images,
-as the model was trained on curated 48x48 grayscale photos rather than 
-real-world webcam conditions.
+### Testing on different people
+The model handles different faces with varying confidence. 
+Facial features like beards, lighting, and angle affect results.
+
+![Husband happy](screenshot2.png)
+![Husband surprised](screenshot4.png)
+
+The app includes:
+- Face detection using OpenCV — automatically crops the face before prediction
+- Confidence scores for all 7 emotions
+- Preview of the 48x48 processed face sent to the model
+- Webcam support for live predictions
+- Status message indicating whether a face was detected
 
 ## Run the App
 
@@ -31,17 +42,29 @@ python app.py
 
 Opens at `http://127.0.0.1:7860`.
 
-- **Upload mode:** upload any photo of a face to get an emotion prediction
-- **Webcam mode:** switch to webcam for live predictions directly in the browser
+- **Upload mode:** upload any photo of a face
+- **Webcam mode:** capture directly from your camera
+- The app automatically detects and crops the face using OpenCV before prediction
 
 ## Project Structure
 
 facial-expression-classifier/
 ├── facial_expression_classifier.ipynb  # main notebook — code + analysis
+├── app.py                              # Gradio web app with OpenCV face detection
 ├── model/
-│   ├── facial_expression_model.keras   # saved model
-│   ├── history3.json                   # training history (iteration 3)
-│   └── history3b.json                  # training history (iteration 3b)
+│   ├── facial_expression_model.keras   # saved trained model
+│   ├── history3.json                   # training history iteration 3
+│   └── history3b.json                  # training history iteration 3b
+├── examples/                           # sample images used in the app
+│   ├── happy.jpg
+│   ├── angry.jpg
+│   ├── sad.jpg
+│   └── surprise.jpg
+├── screenshot.png                      # app demo — me happy prediction
+├── screenshot2.png                     # app demo — husband happy prediction
+├── screenshot3.png                     # app demo — me surprise prediction
+├── screenshot4.png                     # app demo — husband surprised prediction
+├── .gitignore
 ├── requirements.txt
 └── README.md
 
@@ -63,6 +86,20 @@ facial-expression-classifier/
 - Iteration 3 (BatchNorm + Dropout + Augmentation) reduced the train/val accuracy gap 
   from 18% to 6%, indicating better generalization
 - Visually similar emotions (`fear`, `sad`, `neutral`) are frequently confused
+- The app works better on real photos than raw model evaluation suggests, thanks to 
+  OpenCV face detection and cropping
+
+## Known Limitations
+
+- The model never predicts `disgust` due to severe class imbalance in the training data
+- Visually similar emotions (`fear`, `sad`, `neutral`) are frequently confused
+- Performance varies across individuals — facial features like beards, glasses, 
+  or lighting conditions can reduce accuracy
+- The FER-2013 dataset may not represent all demographics equally, which can affect 
+  generalization across different people
+- Trained on grayscale 48×48 images — low resolution limits available features
+- Webcam predictions may be less reliable than uploaded photos due to differences 
+  from training data conditions
 
 ## Dataset
 
@@ -95,7 +132,9 @@ Then open `facial_expression_classifier.ipynb` in VS Code or Jupyter.
 
 - Python 3
 - TensorFlow / Keras
+- OpenCV
 - NumPy, Pandas
 - Matplotlib, Seaborn
 - scikit-learn
 - Pillow
+- Gradio
